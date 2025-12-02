@@ -1,0 +1,54 @@
+{
+    "elementos": [
+        {
+            "nombreP": "ETL Con Python",
+            "urlImagen": "https://ejemplo.com/imagenes/laptop_x1.jpg",
+            "descripcion": {
+                "es": "Mediante codigo python se puede realizar el proceso ETL (Extract, Transform, Load) para obtener datos de una fuente externa y cargarlos en una base de datos y exportarlos en un archivo .csv",
+                "en": "Using Python code, an ETL (Extract, Transform, Load) process can be performed to obtain data from an external source, load it into a database, and export it to a .csv file."
+            },
+            "urlProyecto": "https://ejemplo.com/proyectos/etl-python",
+            "tipo": "python"
+        },
+        {
+            "nombreP": "Actualizar GitHub Automaticamente Con Python",
+            "urlImagen": "https://ejemplo.com/imagenes/laptop_x1.jpg",
+            "descripcion": {
+                "es": "Mediante codigo python, se actualiza los repositorios de github que tenga vinculados localmente",
+                "en": "Using Python code, locally linked GitHub repositories are automatically updated."
+            },
+            "urlProyecto": "https://ejemplo.com/proyectos/etl-python",
+            "tipo": "python"
+        },
+        {
+            "nombreP": "Adventure: Power Bi",
+            "urlImagen": "https://ejemplo.com/imagenes/taza_ceramica.png",
+            "descripcion": {
+                "es": "Utilizando la base de datos de adventure works, se crearon reportes en power bi para la visualizacion de datos de manera grafica, implementando Todo el proceso ETL con SQL Server y Vistas",
+                "en": "Using the Adventure Works database, Power BI reports were created for graphical data visualization, implementing the entire ETL process with SQL Server and Views."
+            },
+            "urlProyecto": "https://ejemplo.com/proyectos/etl-python",
+            "tipo": "power bi"
+        },
+        {
+            "nombreP": "Trabajos Dinamicos con Excel",
+            "urlImagen": "https://ejemplo.com/imagenes/taza_ceramica.png",
+            "descripcion": {
+                "es": "Primer Parte de Algunos trabajos con Excel, Reportes con tablas dinamicas y funciones",
+                "en": "First part of some Excel works, Reports with pivot tables and functions."
+            },
+            "urlProyecto": "https://ejemplo.com/proyectos/etl-python",
+            "tipo": "excel"
+        },
+        {
+            "nombreP": "Consultas dinamicas con SQL Server",
+            "urlImagen": "https://ejemplo.com/imagenes/taza_ceramica.png",
+            "descripcion": {
+                "es": "Consultas dinamicas con SQL Server, creacion de vistas y procedimientos almacenados",
+                "en": "Dynamic queries with SQL Server, creation of views and stored procedures."
+            },
+            "urlProyecto": "https://ejemplo.com/proyectos/etl-python",
+            "tipo": "sql server"
+        }
+    ]
+}
