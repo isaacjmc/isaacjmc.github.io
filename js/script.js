@@ -1,4 +1,7 @@
-const translations = {
+let currentLang = 'es';
+let allData = {};
+
+const staticTranslations = {
     es: {
         nav: {
             profile: "Perfil",
@@ -13,64 +16,6 @@ const translations = {
             bio: "Profesional proactivo y adaptable, con una sólida aptitud para el aprendizaje continuo. Poseo experiencia en el desarrollo backend con Node.js y la manipulación de bases de datos relacionales y no relacionales. Me desenvuelvo bien en entornos colaborativos y dinámicos, siempre buscando adquirir nuevas habilidades.",
             button: "Ver Proyectos",
             contact: "Contáctame"
-        },
-        experience: {
-            title: "Experiencia Laboral",
-            jobs: {
-                dev: {
-                    title: "Desarrollador Web con Vue3 y Nodejs",
-                    desc: `
-                        <li>Diseño, desarrollo y mantenimiento de aplicaciones web robustas.</li>
-                        <li>Implementación de APIs RESTful y servicios web escalables.</li>
-                        <li>Colaboración con equipos multidisciplinarios.</li>
-                    `
-                },
-                analyst: {
-                    title: "Resource Planner y Analista de Datos",
-                    desc: `
-                        <li>Planificación y gestión de recursos para proyectos de desarrollo.</li>
-                        <li>Análisis de grandes volúmenes de datos para la toma de decisiones.</li>
-                        <li>Creación de informes y dashboards interactivos (Power BI).</li>
-                    `
-                },
-                rtqm: {
-                    title: "RTQM - 24-7 Intouch",
-                    desc: `
-                        <li>Responsable del mapeo y programación de horarios.</li>
-                        <li>Colaboración en el desarrollo de soluciones para mejora continua.</li>
-                        <li>Identificación y resolución de incidencias operativas.</li>
-                    `
-                }
-            }
-        },
-        skills: {
-            title: "Habilidades Técnicas",
-            backend: "Backend & DB",
-            frontend: "Frontend",
-            data: "Análisis de Datos",
-            soft: "Habilidades Blandas",
-            soft_skills: {
-                teamwork: "Trabajo en equipo",
-                proactive: "Proactividad",
-                learning: "Aprendizaje continuo"
-            }
-        },
-        projects: {
-            title: "Mis Proyectos",
-            viewProject: "Ver Proyecto"
-        },
-        education: {
-            title: "Educación",
-            degree: {
-                sysadmin: "Ingeniería en Sistemas",
-                hs: "Bachiller Técnico en Computación"
-            }
-        },
-        contact: {
-            title: "Contacto"
-        },
-        footer: {
-            rights: "&copy; 2025 Isaac Josue Magana Cano. Todos los derechos reservados."
         }
     },
     en: {
@@ -87,76 +32,13 @@ const translations = {
             bio: "Proactive and adaptable professional with a strong aptitude for continuous learning. I have experience in backend development with Node.js and handling relational and non-relational databases. I thrive in collaborative and dynamic environments, always seeking to acquire new skills.",
             button: "View Projects",
             contact: "Contact Me"
-        },
-        experience: {
-            title: "Work Experience",
-            jobs: {
-                dev: {
-                    title: "Web Developer with Vue3 and Nodejs",
-                    desc: `
-                        <li>Design, development, and maintenance of robust web applications.</li>
-                        <li>Implementation of RESTful APIs and scalable web services.</li>
-                        <li>Collaboration with multidisciplinary teams.</li>
-                    `
-                },
-                analyst: {
-                    title: "Resource Planner and Data Analyst",
-                    desc: `
-                        <li>Resource planning and management for development projects.</li>
-                        <li>Analysis of large volumes of data for strategic decision-making.</li>
-                        <li>Creation of interactive reports and dashboards (Power BI).</li>
-                    `
-                },
-                rtqm: {
-                    title: "RTQM - 24-7 Intouch",
-                    desc: `
-                        <li>Responsible for schedule mapping and programming.</li>
-                        <li>Collaboration in developing solutions for continuous improvement.</li>
-                        <li>Identification and resolution of operational incidents.</li>
-                    `
-                }
-            }
-        },
-        skills: {
-            title: "Technical Skills",
-            backend: "Backend & DB",
-            frontend: "Frontend",
-            data: "Data Analysis",
-            soft: "Soft Skills",
-            soft_skills: {
-                teamwork: "Teamwork",
-                proactive: "Proactivity",
-                learning: "Continuous Learning"
-            }
-        },
-        projects: {
-            title: "My Projects",
-            viewProject: "View Project"
-        },
-        education: {
-            title: "Education",
-            degree: {
-                sysadmin: "Systems Engineering",
-                hs: "Technical Bachelor in Computing"
-            }
-        },
-        contact: {
-            title: "Contact"
-        },
-        footer: {
-            rights: "&copy; 2025 Isaac Josue Magana Cano. All rights reserved."
         }
     }
 };
 
-let currentLang = 'es';
-let allProjects = [];
-
 document.addEventListener('DOMContentLoaded', () => {
-    const projectsContainer = document.getElementById('projects-container');
     const langToggle = document.getElementById('lang-toggle');
     const lightbox = document.getElementById('lightbox');
-    const lightboxImg = document.getElementById('lightbox-img');
     const closeLightbox = document.querySelector('.close-lightbox');
 
     // Cambiar Idioma
@@ -177,27 +59,33 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Cargar Proyectos
+    // Cargar Datos
     fetch('proyectos.json')
         .then(response => response.json())
         .then(data => {
-            allProjects = data.elementos;
-            renderProjects();
+            allData = data;
+            updateLanguage(); // Initial render
         })
         .catch(error => {
-            console.error('Error al cargar proyectos:', error);
-            projectsContainer.innerHTML = '<p class="error-message">Error al cargar los proyectos. Por favor intenta más tarde.</p>';
+            console.error('Error al cargar datos:', error);
         });
 });
 
 function updateLanguage() {
-    const elements = document.querySelectorAll('[data-i18n]');
-    elements.forEach(element => {
+    // Combine static translations with loaded data
+    // Note: JSON keys are 'ES' and 'EN', static are 'es' and 'en'.
+    const jsonLangKey = currentLang === 'es' ? 'ES' : 'EN';
+    const jsonData = allData[jsonLangKey] || {};
+    const staticData = staticTranslations[currentLang];
+
+    const data = { ...staticData, ...jsonData };
+
+    // Update static text
+    document.querySelectorAll('[data-i18n]').forEach(element => {
         const key = element.getAttribute('data-i18n');
         const keys = key.split('.');
-        let value = translations[currentLang];
+        let value = data;
 
-        // Navegar por el objeto de traducciones
         for (const k of keys) {
             if (value && value[k]) {
                 value = value[k];
@@ -212,18 +100,112 @@ function updateLanguage() {
         }
     });
 
-    // Re-renderizar proyectos para actualizar descripciones
-    renderProjects();
+    // Render Dynamic Sections if data exists in JSON
+    if (data.Experiencia) renderExperience(data.Experiencia);
+    if (data.skills) renderSkills(data.skills);
+    if (data.education) renderEducation(data.education);
+
+    // Render Projects (using global 'elementos' array)
+    if (allData.elementos) {
+        renderProjects(allData.elementos);
+    }
 }
 
-function renderProjects() {
-    const projectsContainer = document.getElementById('projects-container');
-    projectsContainer.innerHTML = ''; // Limpiar contenido existente
+function renderExperience(experienceData) {
+    const container = document.getElementById('experience-timeline');
+    if (!container || !experienceData) return;
+    container.innerHTML = '';
+
+    experienceData.forEach(job => {
+        const item = document.createElement('div');
+        item.className = 'timeline-item';
+
+        let descHtml = '';
+        if (job.descripcion) {
+            // Handle if description is object with lang keys or direct string/array
+            let descContent = job.descripcion;
+            if (typeof job.descripcion === 'object' && !Array.isArray(job.descripcion)) {
+                descContent = job.descripcion[currentLang] || job.descripcion['es'];
+            }
+
+            if (Array.isArray(descContent)) {
+                descHtml = `<ul>${descContent.map(li => `<li>${li}</li>`).join('')}</ul>`;
+            } else {
+                descHtml = `<p>${descContent}</p>`;
+            }
+        }
+
+        item.innerHTML = `
+            <div class="timeline-date">${job.fecha}</div>
+            <div class="timeline-content">
+                <h3>${job.Titulo}</h3>
+                ${descHtml}
+            </div>
+        `;
+        container.appendChild(item);
+    });
+}
+
+function renderSkills(skillsData) {
+    const container = document.getElementById('skills-grid');
+    if (!container || !skillsData) return;
+    container.innerHTML = '';
+
+    const createCategory = (key, title, items) => {
+        const div = document.createElement('div');
+        div.className = 'skill-category';
+        div.innerHTML = `
+            <h3>${title}</h3>
+            <div class="skill-tags">
+                ${items.map(skill => `<span>${skill}</span>`).join('')}
+            </div>
+        `;
+        container.appendChild(div);
+    };
+
+    if (skillsData.backend) createCategory('backend', skillsData.backend.titulo, skillsData.backend.skills);
+    if (skillsData.frontend) createCategory('frontend', skillsData.frontend.titulo, skillsData.frontend.skills);
+    if (skillsData.data) createCategory('data', skillsData.data.titulo, skillsData.data.skills);
+    if (skillsData.soft) createCategory('soft', skillsData.soft.titulo, skillsData.soft.skills);
+}
+
+function renderEducation(educationData) {
+    const container = document.getElementById('education-grid');
+    if (!container || !educationData) return;
+    container.innerHTML = '';
+
+    // Handle structure: { title: "...", degree: [{ Titulo: "...", Fecha: "...", Institucion: "..." }] }
+    if (educationData.degree && Array.isArray(educationData.degree)) {
+        educationData.degree.forEach(degree => {
+            const card = document.createElement('div');
+            card.className = 'education-card';
+            card.innerHTML = `
+                <h3>${degree.Titulo}</h3>
+                <p>${degree.Institucion}</p>
+                <span class="education-date">${degree.Fecha}</span>
+             `;
+            container.appendChild(card);
+        });
+    } else if (educationData.degree) {
+        // Fallback for old object structure if needed, or just ignore
+        Object.values(educationData.degree).forEach(degree => {
+            const card = document.createElement('div');
+            card.className = 'education-card';
+            card.innerHTML = `<h3>${degree}</h3>`;
+            container.appendChild(card);
+        });
+    }
+}
+
+function renderProjects(projects) {
+    const container = document.getElementById('projects-container');
+    if (!container) return;
+    container.innerHTML = '';
 
     const categoryOrder = ['python', 'power bi', 'excel', 'sql server'];
-
     const projectsByType = {};
-    allProjects.forEach(project => {
+
+    projects.forEach(project => {
         const type = project.tipo.toLowerCase();
         if (!projectsByType[type]) {
             projectsByType[type] = [];
@@ -233,13 +215,13 @@ function renderProjects() {
 
     categoryOrder.forEach(type => {
         if (projectsByType[type]) {
-            renderCategory(type, projectsByType[type], projectsContainer);
+            renderCategory(type, projectsByType[type], container);
         }
     });
 
     Object.keys(projectsByType).forEach(type => {
         if (!categoryOrder.includes(type)) {
-            renderCategory(type, projectsByType[type], projectsContainer);
+            renderCategory(type, projectsByType[type], container);
         }
     });
 }
@@ -263,8 +245,17 @@ function renderCategory(type, projects, container) {
 }
 
 function createProjectCard(project) {
-    const btnText = translations[currentLang].projects.viewProject;
-    // Manejar descripción bilingüe
+    const jsonLangKey = currentLang === 'es' ? 'ES' : 'EN';
+    let btnText = "Ver Proyecto";
+
+    if (allData[jsonLangKey] && allData[jsonLangKey].projects && allData[jsonLangKey].projects.viewProject) {
+        btnText = allData[jsonLangKey].projects.viewProject;
+    } else if (staticTranslations[currentLang].projects && staticTranslations[currentLang].projects.viewProject) {
+        // Fallback if we had it in static, but we didn't put projects in static.
+        // Let's just default to "Ver Proyecto" / "View Project" based on lang
+        btnText = currentLang === 'es' ? "Ver Proyecto" : "View Project";
+    }
+
     let description = project.descripcion;
     if (typeof project.descripcion === 'object') {
         description = project.descripcion[currentLang] || project.descripcion['es'];

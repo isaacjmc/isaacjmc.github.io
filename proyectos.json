@@ -50,5 +50,213 @@
             "urlProyecto": "https://ejemplo.com/proyectos/etl-python",
             "tipo": "sql server"
         }
-    ]
+    ],
+    "ES": {
+        "Experiencia": [
+            {
+                "Titulo": "Desarrollador Web con Vue3 y Nodejs",
+                "descripcion": {
+                    "es": [
+                        "Diseño, desarrollo y mantenimiento de aplicaciones web robustas.",
+                        "Implementación de APIs RESTful y servicios web escalables.",
+                        "Colaboración con equipos multidisciplinarios."
+                    ]
+                },
+                "fecha": "2025",
+                "tipo": "Trabajo"
+            },
+            {
+                "Titulo": "Resource Planner y Analista de Datos",
+                "descripcion": {
+                    "es": [
+                        "Planificación y gestión de recursos para proyectos de desarrollo.",
+                        "Análisis de grandes volúmenes de datos para la toma de decisiones.",
+                        "Creación de informes y dashboards interactivos (Power BI)."
+                    ]
+                },
+                "fecha": "2025",
+                "tipo": "Trabajo"
+            },
+            {
+                "Titulo": "RTQM - 24-7 Intouch",
+                "descripcion": {
+                    "es": [
+                        "Responsable del mapeo y programación de horarios.",
+                        "Colaboración en el desarrollo de soluciones para mejora continua.",
+                        "Identificación y resolución de incidencias operativas."
+                    ]
+                },
+                "fecha": "2025",
+                "tipo": "Trabajo"
+            }
+        ],
+        "skills": {
+            "title": "Habilidades Técnicas",
+            "backend": {
+                "titulo": "Backend & DB",
+                "skills": [
+                    "Node.js",
+                    "SQL Server",
+                    "PostgreSQL",
+                    "Python"
+                ]
+            },
+            "frontend": {
+                "titulo": "Frontend",
+                "skills": [
+                    "Vue.js",
+                    "HTML",
+                    "CSS",
+                    "JavaScript",
+                    "Bootstrap"
+                ]
+            },
+            "data": {
+                "titulo": "Análisis de Datos",
+                "skills": [
+                    "Power BI",
+                    "Excel",
+                    "SQL Server",
+                    "Python"
+                ]
+            },
+            "soft": {
+                "titulo": "Habilidades Blandas",
+                "skills": [
+                    "Trabajo en equipo",
+                    "Proactividad",
+                    "Aprendizaje continuo"
+                ]
+            }
+        },
+        "projects": {
+            "title": "Mis Proyectos",
+            "viewProject": "Ver Proyecto"
+        },
+        "education": {
+            "title": "Educación",
+            "degree": [
+                {
+                    "Titulo": "Ingeniería en Sistemas",
+                    "Fecha": "",
+                    "Institucion": "Universidad de Honduras"
+                },
+                {
+                    "Titulo": "Bachiller Técnico en Computación",
+                    "Fecha": "",
+                    "Institucion": "Universidad de Honduras"
+                }
+            ]
+        },
+        "contact": {
+            "title": "Contacto"
+        },
+        "footer": {
+            "rights": "&copy; 2025 Isaac Josue Magana Cano. Todos los derechos reservados."
+        }
+    },
+    "EN": {
+        "Experiencia": [
+            {
+                "Titulo": "Web Developer with Vue3 and Nodejs",
+                "descripcion": {
+                    "en": [
+                        "Design, development, and maintenance of robust web applications.",
+                        "Implementation of RESTful APIs and scalable web services.",
+                        "Collaboration with multidisciplinary teams."
+                    ]
+                },
+                "fecha": "2025",
+                "tipo": "Work"
+            },
+            {
+                "Titulo": "Resource Planner and Data Analyst",
+                "descripcion": {
+                    "en": [
+                        "Resource planning and management for development projects.",
+                        "Analysis of large volumes of data for strategic decision-making.",
+                        "Creation of interactive reports and dashboards (Power BI)."
+                    ]
+                },
+                "fecha": "2025",
+                "tipo": "Work"
+            },
+            {
+                "Titulo": "RTQM - 24-7 Intouch",
+                "descripcion": {
+                    "en": [
+                        "Responsible for schedule mapping and programming.",
+                        "Collaboration in developing solutions for continuous improvement.",
+                        "Identification and resolution of operational incidents."
+                    ]
+                },
+                "fecha": "2025",
+                "tipo": "Work"
+            }
+        ],
+        "skills": {
+            "title": "Habilidades Técnicas",
+            "backend": {
+                "titulo": "Backend & DB",
+                "skills": [
+                    "Node.js",
+                    "SQL Server",
+                    "PostgreSQL",
+                    "Python"
+                ]
+            },
+            "frontend": {
+                "titulo": "Frontend",
+                "skills": [
+                    "Vue.js",
+                    "HTML",
+                    "CSS",
+                    "JavaScript",
+                    "Bootstrap"
+                ]
+            },
+            "data": {
+                "titulo": "Análisis de Datos",
+                "skills": [
+                    "Power BI",
+                    "Excel",
+                    "SQL Server",
+                    "Python"
+                ]
+            },
+            "soft": {
+                "titulo": "Habilidades Blandas",
+                "skills": [
+                    "Trabajo en equipo",
+                    "Proactividad",
+                    "Aprendizaje continuo"
+                ]
+            },
+            "projects": {
+                "title": "My Projects",
+                "viewProject": "View Project"
+            },
+            "education": {
+                "title": "Education",
+                "degree": [
+                    {
+                        "Titulo": "Ingeniería en Sistemas",
+                        "Fecha": "",
+                        "Institucion": "Universidad de Honduras"
+                    },
+                    {
+                        "Titulo": "Bachiller Técnico en Computación",
+                        "Fecha": "",
+                        "Institucion": "Universidad de Honduras"
+                    }
+                ]
+            },
+            "contact": {
+                "title": "Contact"
+            },
+            "footer": {
+                "rights": "&copy; 2025 Isaac Josue Magana Cano. All rights reserved."
+            }
+        }
+    }
 }
