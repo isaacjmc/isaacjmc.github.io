@@ -60,14 +60,31 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Cargar Datos
-    fetch('proyectos.json')
+    // Cargar Datos
+    const loadStaticData = fetch('proyectos.json').then(response => response.json());
+
+    // Cargar proyectos desde la API de PythonAnywhere
+    const loadApiData = fetch('https://isaacjm.pythonanywhere.com/api/proyectos')
         .then(response => response.json())
-        .then(data => {
-            allData = data;
+        .catch(error => {
+            console.error('Error al cargar API:', error);
+            return { elementos: [] }; // Fallback si falla la API
+        });
+
+    Promise.all([loadStaticData, loadApiData])
+        .then(([staticData, apiData]) => {
+            allData = staticData;
+
+            // Si la API trajo proyectos, usamos esos. Si no, se quedan los del json (si hubiera)
+            if (apiData && apiData.elementos && apiData.elementos.length > 0) {
+                console.log("Cargados " + apiData.elementos.length + " proyectos desde la API");
+                allData.elementos = apiData.elementos;
+            }
+
             updateLanguage(); // Initial render
         })
         .catch(error => {
-            console.error('Error al cargar datos:', error);
+            console.error('Error crítico al cargar datos:', error);
         });
 });
 
