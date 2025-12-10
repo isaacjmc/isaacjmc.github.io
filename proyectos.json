@@ -160,7 +160,7 @@
             {
                 "Titulo": "Web Developer with Vue3 and Nodejs",
                 "descripcion": {
-                    "en": [
+                    "es": [
                         "Design, development, and maintenance of robust web applications.",
                         "Implementation of RESTful APIs and scalable web services.",
                         "Collaboration with multidisciplinary teams."
@@ -172,7 +172,7 @@
             {
                 "Titulo": "Resource Planner and Data Analyst",
                 "descripcion": {
-                    "en": [
+                    "es": [
                         "Resource planning and management for development projects.",
                         "Analysis of large volumes of data for strategic decision-making.",
                         "Creation of interactive reports and dashboards (Power BI)."
@@ -184,7 +184,7 @@
             {
                 "Titulo": "RTQM - 24-7 Intouch",
                 "descripcion": {
-                    "en": [
+                    "es": [
                         "Responsible for schedule mapping and programming.",
                         "Collaboration in developing solutions for continuous improvement.",
                         "Identification and resolution of operational incidents."

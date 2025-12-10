@@ -5,11 +5,9 @@ from oauth2client.service_account import ServiceAccountCredentials
 import os
 
 app = Flask(__name__)
-CORS(app) # Habilitar CORS para todas las rutas
+CORS(app) # Habilitar CORS para todas las rutas, para la comunicacion entre el frontend y el backend
 
-
-# Configuración de la API de Google Sheets
-# Asegúrate de tener el archivo 'credentials.json' en la misma carpeta
+# Asegúrate de tener el archivo 'credentials.json' en la misma carpeta y de haber habilitado la API de Google Sheets en el proyecto de Google Cloud
 SCOPE = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
 # Usamos ruta absoluta para evitar problemas en PythonAnywhere
 CREDS_FILE = os.path.join(os.path.dirname(__file__), 'credentials.json')
@@ -23,17 +21,9 @@ def get_data_from_sheets():
         creds = ServiceAccountCredentials.from_json_keyfile_name(CREDS_FILE, SCOPE)
         client = gspread.authorize(creds)
         
-        # Abre la hoja de cálculo
-        # Si tu archivo se llama diferente, cambia esto: client.open("NombreDelArchivo").worksheet(SHEET_NAME)
-        # Aquí asumimos que abres por nombre de archivo o usas la primera hoja si solo hay una
-        # Para ser más seguro, usa el ID o el nombre exacto del archivo
-        # Ejemplo: sheet = client.open("MiPortafolio").worksheet("elementos")
-        
-        # NOTA: Reemplaza "NombreDeTuArchivoGoogleSheets" con el nombre real de tu archivo en Drive
+        # Reemplaza "NombreDeTuArchivoGoogleSheets" con el nombre real de tu archivo en Drive, si quieres implementarlo debes cambiarlo 
         sheet = client.open("infoijmc").worksheet("elementos") 
         
-        # Usamos get_all_values() en lugar de get_all_records() para evitar errores
-        # si hay columnas vacías (headers duplicados como '') al final de la hoja.
         rows = sheet.get_all_values()
         
         if not rows:
@@ -43,13 +33,13 @@ def get_data_from_sheets():
         headers = rows[0]
         data_rows = rows[1:]
         
-        # DEBUG: Si no hay filas de datos, devolvemos info para depurar
+        # Si no hay filas de datos, devolvemos info para depurar, comprobando si se encontraron headers e informacion bajo lo mismo
         if not data_rows:
             return [], f"Se encontraron headers: {headers}, pero no hay filas de datos."
 
         formatted_data = []
         for row in data_rows:
-            # Creamos un diccionario mapeando header -> valor, ignorando headers vacíos
+            # Se crea el diccionario mapeando header de la hoja de calculo, primera fila
             row_dict = {}
             for i, header in enumerate(headers):
                 if header and i < len(row):
@@ -58,11 +48,10 @@ def get_data_from_sheets():
             if not row_dict:
                 continue
 
-            # Mapeo usando los nombres exactos de las columnas en tu hoja
-            # IMPORTANTE: Los nombres aquí (ej. 'urlImagen') deben ser IDÉNTICOS a los de tu Excel
+            # Mapeo usando los nombres exactos de las columnas en tu hoja, los nombres aqui (ej. 'urlImagen') deben ser IDÉNTICOS a los de tu sheet
             item = {
                 "nombreP": row_dict.get('nombrep', ''),
-                "urlImagen": row_dict.get('urlImagen', ''), # Corregido: urlImagen (camelCase)
+                "urlImagen": row_dict.get('urlImagen', ''),
                 "descripcion": {
                     "es": row_dict.get('es', ''),
                     "en": row_dict.get('en', '')

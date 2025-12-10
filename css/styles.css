@@ -103,7 +103,6 @@ body {
     color: var(--color-deep-purple);
 }
 
-/* Hero Section */
 .hero-section {
     background: linear-gradient(135deg, var(--color-indigo) 0%, var(--color-deep-purple) 100%);
     color: var(--color-white);
@@ -201,13 +200,11 @@ body {
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
 }
 
-/* Títulos de Sección */
 .section-title {
     text-align: center;
     font-size: 2.5rem;
     margin-bottom: 3rem;
-    color: var(--color-deep-purple);
-    position: relative;
+    color: var(--color-deep-purple) position: relative;
 }
 
 .section-title::after {
@@ -220,7 +217,7 @@ body {
     border-radius: 2px;
 }
 
-/* Timeline Experiencia */
+
 .timeline {
     position: relative;
     max-width: 800px;

@@ -36,6 +36,7 @@ const staticTranslations = {
     }
 };
 
+// Cuando la página termina de cargar, configuramos los botones y pedimos los datos a la API.
 document.addEventListener('DOMContentLoaded', () => {
     const langToggle = document.getElementById('lang-toggle');
     const lightbox = document.getElementById('lightbox');
@@ -59,11 +60,9 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Cargar Datos
-    // Cargar Datos
     const loadStaticData = fetch('proyectos.json').then(response => response.json());
 
-    // Cargar proyectos desde la API de PythonAnywhere
+    // Cargar proyectos desde la API alojado en PythonAnywhere, desde el sheets
     const loadApiData = fetch('https://isaacjm.pythonanywhere.com/api/proyectos')
         .then(response => response.json())
         .catch(error => {
@@ -75,29 +74,29 @@ document.addEventListener('DOMContentLoaded', () => {
         .then(([staticData, apiData]) => {
             allData = staticData;
 
-            // Si la API trajo proyectos, usamos esos. Si no, se quedan los del json (si hubiera)
+            // Si la API trajo proyectos, usamos esos. Si no, se quedan los del json (si hubiera, mientras trabajo en el sheets)
             if (apiData && apiData.elementos && apiData.elementos.length > 0) {
                 console.log("Cargados " + apiData.elementos.length + " proyectos desde la API");
                 allData.elementos = apiData.elementos;
             }
 
-            updateLanguage(); // Initial render
+            updateLanguage();
         })
         .catch(error => {
             console.error('Error crítico al cargar datos:', error);
         });
 });
 
+// Esta función actualiza todos los textos de la página al idioma seleccionado (Español o Inglés).
+// Combina las traducciones estáticas con las que vienen del JSON para que todo quede traducido.
 function updateLanguage() {
-    // Combine static translations with loaded data
+    // Cambio de idioma, 
     // Note: JSON keys are 'ES' and 'EN', static are 'es' and 'en'.
     const jsonLangKey = currentLang === 'es' ? 'ES' : 'EN';
     const jsonData = allData[jsonLangKey] || {};
     const staticData = staticTranslations[currentLang];
 
     const data = { ...staticData, ...jsonData };
-
-    // Update static text
     document.querySelectorAll('[data-i18n]').forEach(element => {
         const key = element.getAttribute('data-i18n');
         const keys = key.split('.');
@@ -117,17 +116,16 @@ function updateLanguage() {
         }
     });
 
-    // Render Dynamic Sections if data exists in JSON
     if (data.Experiencia) renderExperience(data.Experiencia);
     if (data.skills) renderSkills(data.skills);
     if (data.education) renderEducation(data.education);
 
-    // Render Projects (using global 'elementos' array)
     if (allData.elementos) {
         renderProjects(allData.elementos);
     }
 }
 
+// Toma la lista de trabajos y crea la línea de tiempo de experiencia laboral en la página.
 function renderExperience(experienceData) {
     const container = document.getElementById('experience-timeline');
     if (!container || !experienceData) return;
@@ -139,7 +137,6 @@ function renderExperience(experienceData) {
 
         let descHtml = '';
         if (job.descripcion) {
-            // Handle if description is object with lang keys or direct string/array
             let descContent = job.descripcion;
             if (typeof job.descripcion === 'object' && !Array.isArray(job.descripcion)) {
                 descContent = job.descripcion[currentLang] || job.descripcion['es'];
@@ -163,6 +160,7 @@ function renderExperience(experienceData) {
     });
 }
 
+// Muestra mis habilidades divididas en categorías como Backend, Frontend, Datos, etc.
 function renderSkills(skillsData) {
     const container = document.getElementById('skills-grid');
     if (!container || !skillsData) return;
@@ -186,6 +184,7 @@ function renderSkills(skillsData) {
     if (skillsData.soft) createCategory('soft', skillsData.soft.titulo, skillsData.soft.skills);
 }
 
+// Genera las tarjetas con mi información educativa (títulos, cursos, certificaciones).
 function renderEducation(educationData) {
     const container = document.getElementById('education-grid');
     if (!container || !educationData) return;
@@ -214,6 +213,7 @@ function renderEducation(educationData) {
     }
 }
 
+// Organiza mis proyectos por categorías (Python, Power BI, etc.) y los manda a pintar en pantalla.
 function renderProjects(projects) {
     const container = document.getElementById('projects-container');
     if (!container) return;
@@ -243,6 +243,7 @@ function renderProjects(projects) {
     });
 }
 
+// Una pequeña ayuda para crear una sección completa de proyectos de un tipo específico (ej. todos los de Python).
 function renderCategory(type, projects, container) {
     const categorySection = document.createElement('div');
     categorySection.className = 'category-block';
@@ -261,6 +262,7 @@ function renderCategory(type, projects, container) {
     container.appendChild(categorySection);
 }
 
+// Crea el HTML bonito para una tarjeta de proyecto individual, con su imagen, descripción y botón.
 function createProjectCard(project) {
     const jsonLangKey = currentLang === 'es' ? 'ES' : 'EN';
     let btnText = "Ver Proyecto";
@@ -268,8 +270,6 @@ function createProjectCard(project) {
     if (allData[jsonLangKey] && allData[jsonLangKey].projects && allData[jsonLangKey].projects.viewProject) {
         btnText = allData[jsonLangKey].projects.viewProject;
     } else if (staticTranslations[currentLang].projects && staticTranslations[currentLang].projects.viewProject) {
-        // Fallback if we had it in static, but we didn't put projects in static.
-        // Let's just default to "Ver Proyecto" / "View Project" based on lang
         btnText = currentLang === 'es' ? "Ver Proyecto" : "View Project";
     }
 
@@ -293,6 +293,7 @@ function createProjectCard(project) {
     `;
 }
 
+// Abre la imagen en grande (modo lightbox) cuando le das clic a la imagen de un proyecto.
 function openLightbox(imgUrl) {
     const lightbox = document.getElementById('lightbox');
     const lightboxImg = document.getElementById('lightbox-img');
